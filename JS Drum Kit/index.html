@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="css/stylesheet.css" />
+    <title>Dram Kit</title>
+  </head>
+  <body>
+    <container class="keys">
+      <div data-key="60" id="key">
+        <kbd>A</kbd>
+        <span class="sound">clap</span>
+      </div>
+      <div data-key="70" id="key">
+        <kbd>S</kbd>
+        <span class="sound">hithat</span>
+      </div>
+      <div data-key="80" id="key">
+        <kbd>D</kbd>
+        <span class="kick">clap</span>
+      </div>
+    </container>
+
+    <!-- カスタムデータ属性を使うと一貫性が出る。音のファイルはaudioタグを使う-->
+    <audio
+      data-key="65"
+      src="Sounds/01 - JavaScript Drum Kit_sounds_clap.wav"
+    ></audio>
+    <audio
+      data-key="83"
+      src="Sounds/01 - JavaScript Drum Kit_sounds_hihat.wav"
+    ></audio>
+    <audio
+      data-key="68"
+      src="Sounds/01 - JavaScript Drum Kit_sounds_kick.mp3"
+    ></audio>
+
+    <script src="index.js"></script>
+  </body>
+</html>
