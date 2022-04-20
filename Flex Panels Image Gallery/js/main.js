@@ -19,3 +19,4 @@
     (panel) => panel.addEventListener("transitionend", toggleActive) //2) 2の処理がおわったら
   ); //transitionend：CSSのアニメーションが終わった時に発生
 }
+
