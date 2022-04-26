@@ -41,12 +41,25 @@ function handleRangeUpdate() {
   //💡Function オブジェクトの name プロパティは読み取り専用で、作成時に付けられた関数の名前、もしくは無名関数の場合は anonymous または '' (空文字列) を返す
 }
 
-//↓ビデオの再生バー
+//↓ビデオの再生バーの位置
 function handleProgress() {
   const percent = (video.currentTime / video.duration) * 100;
   //👆How long is the video & How far are we right now?
   progressBar.style.flexBasis = `${percent}%`;
-  //flexBasis
+  //flexBasis(検証ツールより)
+}
+
+//↓ビデオの再生バーの操作
+function scrub(e) {
+  const scrubTime = (e.offsetX / progress.offsetWidth) * video.duration;
+  //(カッコ内)はパーセンテージなので、これにビデオの長さを掛けてるだけ
+
+  video.currentTime = scrubTime;
+
+  //💡offsetWidth: 再生バーの全部を取得
+  //💡videoElement.duration: video要素の合計（最大）再生時間を取得する
+  //💡HTMLMediaElement.currentTimeプロパティは、現在の再生時間を秒単位で示す
+  console.log(e);
 }
 
 //🌸 Hook up the event listener
@@ -71,3 +84,19 @@ ranges.forEach((range) => range.addEventListener("change", handleRangeUpdate));
 ranges.forEach((range) =>
   range.addEventListener("mousemove", handleRangeUpdate)
 );
+
+//scrub
+
+let mousedown = false; //flag variable(mouse通りにバーが動くように)
+
+progress.addEventListener("click", scrub);
+progress.addEventListener("mousemove", () => {
+  if (mousedown) {
+    scrub();
+  }
+});
+
+// progress.addEventListener('mousemove', (e) => mousedown && scrub(e));
+
+progress.addEventListener("mousedown", () => (mousedown = true));
+progress.addEventListener("mouseup", () => (mousedown = false));
