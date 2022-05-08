@@ -56,7 +56,9 @@
     <script>
       const addItems = document.querySelector(".add-items");
       const itemsList = document.querySelector(".plates");
-      const items = [];
+
+      const items = JSON.parse(localStorage.getItem("items") || []);
+      //↑ロードしてもデータ残るよ
 
       function addItem(e) {
         e.preventDefault(); //💡ページがリロードするのを防ぐ
@@ -71,6 +73,9 @@
         items.push(item);
         //💡itemを取得したitemを配列に入れたい。配列を末尾に追加するにはpush()を使う
         populateList(items, itemsList);
+        localStorage.setItem("items", JSON.stringify(items));
+        //↑local strageに保存する→set this item's array into local storage
+        //💡JSON.stringfy(): 置き換え関数を指定して値を置き換えたり、置き換え配列を指定して指定されたプロパティのみを含むようにしたりすることもできます。
         this.reset();
         //💡reset(): フォームを初期状態にリセットする
       }
@@ -87,13 +92,31 @@
           .map((plate, i) => {
             return `  
           <li>
-            <label for=">${plate.text}</label>
+            <input type="checkbox" data-index=${i}  id="item${i}" ${
+              plate.done ? "checked" : ""
+            }/>
+            <label for="item${i}">${plate.text}</label>
           </li>           
           `;
-          }).join("");    //💡配列 (または配列風オブジェクト) の全要素を順に連結した文字列を新たに作成して返す。mapが作った配列を取得して一つのstringに変換する
+          })
+          .join(""); //💡配列 (または配列風オブジェクト) の全要素を順に連結した文字列を新たに作成して返す。mapが作った配列を取得して一つのstringに変換する
+      }
+
+      function toggleDone(e) {
+        if (!e.target.matches("input")) return; //skip this unless it's  an input
+        const el = e.target;
+        const index = el.dataset.index;
+        items[items].done = !items[index].done;
+        localStorage.setItem("items", JSON.stringify(items));
+        populateList(items, itemsList);
       }
 
       addItems.addEventListener("submit", addItem);
+      itemsList.addEventListener("click", toggleDone);
+
+      populateList(items, itemsList);
+
+      //plateに、childern inputsがクリックされたらそれを渡してくれる？？
     </script>
   </body>
 </html>
