@@ -32,7 +32,7 @@ const sortedBands = bands.sort(function (a, b) {
   }
 });
 
-console.log(sortedBands);
+console.log(sortedBands)
 
 document.querySelector("#bands").innerHTML = sortedBands
   .map((band) => `<li>${band}</li>`)
