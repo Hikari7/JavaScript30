@@ -37,3 +37,5 @@ const msg = new SpeechSynthesisUtterance();
   options.forEach(option => option.addEventListener('change', setOption));
   speakButton.addEventListener('click', toggle);
   stopButton.addEventListener('click', () => toggle(false));
+
+  
